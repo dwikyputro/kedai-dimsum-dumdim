@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:ital,wght@300..700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./img/banner1.jpg" type="image/x-icon">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="/src/app.js" async></script>
 </head>
@@ -121,7 +122,7 @@
         <div class="row">
             <template x-for="(item, index) in items" x-key="index">
             <div class="menu-card">
-                <img :src="`./img/${item.img}`" :alt="item.name" class="menu-card-img">
+                <img loading="lazy" :src="`./img/${item.img}`" :alt="item.name" class="menu-card-img">
                 <h3 class="menu-card-title" x-text="item.name"></h3>
                 <p class="menu-card-price" x-text="item.desc">Dimsum Original Kualitas Premium</p>
                 <button class="green_btn" x-text="rupiah(item.price)" href="#" @click.prevent="$store.cart.add(item)"></button>
