@@ -10,16 +10,72 @@
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:ital,wght@300..700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="stylesheet" href="style.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="/src/app.js" async></script>
 </head>
 <body>
 
     <!--navbar-->
-    <nav class="navbar">
+    <nav class="navbar" x-data>
         <div class="navbar-extra">
             <a href="#" id="menu"><i data-feather="menu"></i></a>
-            <a href="#" id="cart"><i data-feather="shopping-cart"></i></a>
-            <a href="#" id="search"><i data-feather="search"></i></a>
+            <a href="#" id="shopping-cart-btn">
+                <i data-feather="shopping-cart"></i>
+                <span class="quantity-badge" x-show="$store.cart.quantity" x-text="$store.cart.quantity"></span>
+            </a>
+            <a href="#" id="search-btn"><i data-feather=""></i></a>
         </div>
+        <!-- Search Form -->
+        <div class="search-form">
+            <input type="search" id="search-box" placeholder="search here...">
+            <label for="search-box"><i data-feather="search"></i></label>
+        </div>
+        <!-- Search Form end -->
+
+        <!-- shopping cart -->
+        <div class="shopping-cart">
+            <template x-for="(item, index) in $store.cart.items" x-key="index">
+            <div class="cart-item">
+                <img :src="`img/${item.img}`" :alt="item.name">
+                <div class="item-detail">
+                    <h3 x-text="item.name"></h3>
+                    <div class="item-price">
+                        <span x-text="rupiah(item.price)"></span> &times;
+                        <button id="remove" @click="$store.cart.remove(item.id)">&minus;</button>
+                        <span x-text="item.quantity"></span>
+                        <button id="add" @click="$store.cart.add(item)">&plus;</button> &equals;
+                        <span x-text="rupiah(item.total)"></span>
+                    </div>
+                </div>
+            </div>
+            </template>
+            <h4 x-show="!$store.cart.items.length" style="margin-top: 1rem;">Kosong</h4>
+            <h4 x-show="$store.cart.items.length">Total : <span x-text="rupiah($store.cart.total)"></span></h4>
+
+            <div class="form-container" x-show="$store.cart.items.length">
+                <form action="" id="checkoutForm">
+                    <input type="hidden" name="items" x-model="JSON.stringify($store.cart.items)">
+                    <input type="hidden" name="total" x-model="$store.cart.total">
+                    <h5>Customer Detail</h5>
+
+                    <label for="name">
+                        <span>Name</span>
+                        <input type="text" name="name" id="name">
+                    </label>
+                    <label for="email">
+                        <span>Email</span>
+                        <input type="email" name="email" id="email">
+                    </label>
+                    <label for="phone">
+                        <span>Phone</span>
+                        <input type="number" name="phone" id="phone" autocomplete="off">
+                    </label>
+
+                    <button class="checkout-button disabled" type="submit" id="checkout-button" value="checkout">Checkout</button>
+                </form>
+            </div>
+        </div>
+        <!-- shopping cart end -->
         <div class="navbar-nav">
             <a href="#home">Home</a>
             <a href="#about">About</a>
@@ -35,8 +91,8 @@
     <!--hero section-->
     <section class="hero" id="home">
         <main class="content">
-            <h1>Mari rasakan enaknya<span> Dimsum</span></h1>
-            <p>pesan sekarang gratis ongkir area jakarta-depok</p>
+            <h1>Mari rasakan enaknya<span> Dum</span>Dim</h1>
+            <p>Kenikmatan Dumpling dan Dimsum yang Sesungguhnya</p>
             <a href="#menu1" class="cta">Pesan Sekarang</a>
         </main>
     </section>
@@ -52,53 +108,25 @@
             </div>
             <div class="content">
                 <h3>Kenapa Memilih Dimsum Kami?</h3>
-                <p>Dimsum dari Kedai DimDum di buat dengan bahan bahan premium dan terbaik yang akan memanjakan lidah anda mulai dari gigitan pertama</p>
-                <p>Rasakan sensasi kenikmatan Dimsum dari kedai DimDum yang belum pernah anda coba sebelumnya</p>
+                <p>Dimsum dari Kedai DumDim di buat dengan bahan bahan premium dan terbaik yang akan memanjakan lidah anda mulai dari gigitan pertama</p>
+                <p>Rasakan sensasi kenikmatan Dimsum dari kedai DumDim yang belum pernah anda coba sebelumnya</p>
             </div>
         </div>
     </section>
     <!--about section end-->
 
     <!--Menu section-->
-    <section id="menu1" class="menu1">
+    <section id="menu1" class="menu1" x-data="menu1">
         <h2><span>Menu</span> Kami</h2>
         <div class="row">
+            <template x-for="(item, index) in items" x-key="index">
             <div class="menu-card">
-                <img src="./img/dimsum.jpg" alt="dimsum" class="menu-card-img">
-                <h3 class="menu-card-title">Dimsum Original (5pcs)</h3>
-                <p class="menu-card-price">Dimsum Original Kualitas Premium</p>
-                <button class="green_btn">Rp 16.000</button>
+                <img :src="`img/${item.img}`" :alt="item.name" class="menu-card-img">
+                <h3 class="menu-card-title" x-text="item.name"></h3>
+                <p class="menu-card-price" x-text="item.desc">Dimsum Original Kualitas Premium</p>
+                <button class="green_btn" x-text="rupiah(item.price)" href="#" @click.prevent="$store.cart.add(item)"></button>
             </div>
-            <div class="menu-card">
-                <img src="./img/chili.jpg" alt="chili" class="menu-card-img">
-                <h3 class="menu-card-title">Gyoza Chili Oil (4pcs)</h3>
-                <p class="menu-card-price">Gyoza dengan Chili Oil yang bikin Ketagihan</p>
-                <button class="green_btn">Rp 20.000</button>
-            </div>
-            <div class="menu-card">
-                <img src="./img/mentai.jpg" alt="mentai" class="menu-card-img">
-                <h3 class="menu-card-title">Dimsum Mentai (4pcs)</h3>
-                <p class="menu-card-price">Dimsum dengan Saus Mentai yang Nikmat</p>
-                <button class="green_btn">Rp 20.000</button>
-            </div>
-            <div class="menu-card">
-                <img src="./img/dumpling.jpg" alt="dumpling" class="menu-card-img">
-                <h3 class="menu-card-title">Dumpling (7pcs)</h3>
-                <p class="menu-card-price">Dumpling isi Ayam yang Flavourful</p>
-                <button class="green_btn">Rp 25.000</button>
-            </div>
-            <div class="menu-card">
-                <img src="./img/mix.jpg" alt="mix" class="menu-card-img">
-                <h3 class="menu-card-title">Dimsum Mix (4pcs)</h3>
-                <p class="menu-card-price">Dimsum dengan Isian yang Berbeda</p>
-                <button class="green_btn">Rp 16.000</button>
-            </div>
-            <div class="menu-card">
-                <img src="./img/tempura.jpg" alt="tempura" class="menu-card-img">
-                <h3 class="menu-card-title">Dimsum</h3>
-                <p class="menu-card-price">Udang Goreng Crispy(10pcs)</p>
-                <button class="green_btn">Rp 35.000</button>
-            </div>
+            </template>
         </div>
     </section>
     <!--Menu section end-->
@@ -111,15 +139,15 @@
             <form action="">
                 <div class="input-group">
                     <i data-feather="user"></i>
-                    <input type="text" placeholder="nama">
+                    <h1>: Dwiky Saputro</h1>
                 </div>
                 <div class="input-group">
                     <i data-feather="mail"></i>
-                    <input type="text" placeholder="email">
+                    <h1>: xdesperado3@gmail.com</h1>
                 </div>
                 <div class="input-group">
                     <i data-feather="phone"></i>
-                    <input type="text" placeholder="no hp">
+                    <h1>: +62-8211-1462-926</h1>
                 </div>
                 <button type="submit" class="btn">kirim pesan</button>
             </form>

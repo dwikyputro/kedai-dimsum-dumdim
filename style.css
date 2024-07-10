@@ -17,7 +17,7 @@ html{
 }
 
 body{
-    font-family: 'Quicksand', sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: var(--bg);
     color: #ffffff;
     min-height: 3000px;
@@ -90,6 +90,168 @@ body{
     display: none;
 }
 
+/* navbar search form */
+.navbar .search-form{
+    position: absolute;
+    top: 100%;
+    left: 7%;
+    background-color: white;
+    width: 50rem;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: 0.3s;
+}
+
+.navbar .search-form.active{
+    transform: scaleY(1);
+} 
+
+.navbar .search-form input{
+    height: 100%;
+    width: 100%;
+    font-size: 1.6rem;
+    color: var(--bg);
+    padding: 1rem;
+}
+
+.navbar .search-form label{
+    cursor: pointer;
+    font-size: 2rem;
+    margin-right: 1.5rem;
+    color: var(--bg);
+}
+
+/* shopping cart section */
+#shopping-cart-btn{
+    position: relative;
+}
+
+#shopping-cart-btn .quantity-badge{
+    display: inline-block;
+    padding: 1px 5px;
+    background-color: red;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    position: absolute;
+    top: 0;
+    left: -10px;
+}
+
+.shopping-cart{
+    position: absolute;
+    top: 101%;
+    left: -100%;
+    height: 100vh;
+    width: 35rem;
+    padding: 0 1.5rem;
+    background-color: white;
+    color: var(--bg);
+    transition: 0.3s linear;
+}
+
+.shopping-cart.active{
+    left: 0;
+}
+
+.shopping-cart .cart-item{
+    margin: 2rem 1;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed var(--primary);
+    position: relative;
+}
+
+.shopping-cart img{
+    height: 3rem;
+    border-radius: 50%;
+}
+
+.shopping-cart h3{
+    font-size: 1rem;
+}
+
+.shopping-cart .item-price{
+    font-size: 1rem;
+
+}
+
+.shopping-cart .cart-item #add,
+.shopping-cart .cart-item #remove{
+    display: inline-block;
+    padding: 2px 5px;
+    cursor: pointer;
+    margin: 0 8px;
+    background-color: var(--primary);
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.shopping-cart h4{
+    font-size: 1.4rem;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+/* form checkout */
+.form-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-top: 1px dashed black;
+    margin-top: 1rem;
+    padding: 1rem;
+}
+
+.form-container h5{
+    text-align: center;
+    font-size: 1rem;
+}
+
+.form-container form{
+    width: 100%;
+    text-align: center;
+}
+
+.form-container label{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.form-container span{
+    text-align: right;
+}
+
+.form-container input{
+    background-color: var(--primary);
+    padding: 5px;
+    font-size: 1rem;
+    width: 70%;
+}
+
+.form-container .checkout-button{
+    padding: 6px 14px;
+    background-color: rgba(0, 100, 0, 0.8);
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 20px;
+    margin: 1rem auto;
+    cursor: pointer;
+}
+
+.form-container .checkout-button.disabled{
+    background-color: grey;
+    cursor: not-allowed;
+}
+
 /*hero section*/
 .hero{
     min-height: 100vh;
@@ -143,7 +305,7 @@ body{
     display: inline-block;
     padding: 1rem 3rem;
     font-size: 1.4rem;
-    color: var(--primary);
+    color: white;
     background-color: rgba(0, 100, 0, 0.8);
     border-radius: 0.5rem;
     box-shadow: 1px 1px 3px rgba(1, 1, 3, 0.5);
@@ -277,7 +439,6 @@ body{
     align-items: center;
     margin-top: 2rem;
     background-color: var(--bg);
-    border: 1px solid white;
     padding-left: 2rem;
 }
 
@@ -287,6 +448,12 @@ body{
     font-size: 1.7rem;
     background: none;
     color: white;
+}
+
+.contact .row form .input-group h1{
+    color: white;
+    font-weight: bold;
+    
 }
 
 .contact .row form .btn{
@@ -304,14 +471,14 @@ footer {
     text-align: center;
     color: white;
     padding: 1rem 0;
-    margin-top: 5rem;
+    margin-top: 13rem;
 }
 
 .footer-bottom {
     color: white;
     text-align: center;
     padding: 20px 0;
-    margin-top: 0px;
+    margin-top: 10px;
 }
 
 
@@ -365,6 +532,11 @@ footer {
         transform: scaleX(0.2);
     }
 
+    .navbar .search-form{
+        width: 90%;
+        left: 2rem;
+    }
+
     .about .row{
         flex-wrap: wrap;
     }
@@ -403,6 +575,8 @@ footer {
     .contact .row form{
         padding: 0;
     }
+
+
 }
 
 /*Mobile Phone*/
